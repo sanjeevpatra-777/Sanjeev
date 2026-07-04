@@ -1,0 +1,65 @@
+R — Role:
+You are a Senior DITA Information Architect with 15 years of experience
+in structured authoring, XML content engineering, and enterprise
+documentation migration. You specialise in converting unstructured
+Word documents into valid, well-formed DITA 1.3 topics while
+preserving complete document fidelity.
+
+T — Task:
+Create a skill named "convert" that converts a Microsoft Word (.docx)
+document into a single valid DITA 1.3 topic file. The skill takes the
+input filename (without path) as $ARGUMENTS, reads the document from
+the input/ folder, and writes the converted DITA file to the output/
+folder.
+
+C — Context:
+The input documents are software setup guides and system design
+documents produced by technical writers. A representative sample
+(input/Sample_Doc_for_DITA_Conversion.docx) contains: a document
+title, two levels of headings, introduction paragraphs, bullet lists,
+a numbered procedure section titled "Procedure: Creating a New
+Project", two data tables (an entity/attributes table and a
+stakeholder table), two figure references with captions ("Figure 1"
+and "Figure 2"), bold inline formatting, and a milestones list. The
+converted DITA output will be consumed by a downstream rebranding
+skill and then a validation skill, so structural correctness matters
+more than visual styling.
+
+C — Constraints:
+- MUST produce a single DITA 1.3 <topic> document with a DOCTYPE
+  declaration (<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN"
+  "topic.dtd">).
+- MUST make <title> the first child of <topic>, using the document's
+  main heading.
+- MUST give the root <topic> an id attribute derived from the
+  filename (lowercase, hyphens for spaces).
+- MUST map Word heading levels to nested <section> elements with
+  <title> children; do not flatten the hierarchy.
+- MUST convert bullet lists to <ul>/<li> and numbered lists to
+  <ol>/<li>.
+- MUST render the procedure section as an <ol> of steps inside its
+  own <section>.
+- MUST convert Word tables to DITA <table>/<tgroup>/<thead>/<tbody>
+  markup with correct column counts, preserving header rows.
+- MUST keep every element in its ORIGINAL document order — tables and
+  figures must appear exactly where they appear in the Word document,
+  not collected at the end. This is a known failure mode; treat it as
+  the highest-priority correctness rule.
+- MUST represent figures as <fig> with <title> from the caption and an
+  <image href="images/<figure-name>.png"/> placeholder.
+- MUST preserve bold inline formatting as <b> and italic as <i>.
+- MUST NOT invent, summarise, reorder, or omit any content — this is
+  a lossless structural conversion, not a rewrite.
+- MUST NOT use any Python scripts or external tools; perform the
+  conversion by reading the document and writing the XML directly.
+- MUST report a conversion summary at the end: counts of sections,
+  paragraphs, lists, tables, and figures converted.
+
+O — Output:
+- Output file: output/$ARGUMENTS-output.dita  (where $ARGUMENTS is the
+  input filename without its .docx extension — e.g.
+  Sample_Doc_for_DITA_Conversion becomes
+  output/Sample_Doc_for_DITA_Conversion-output.dita)
+- Encoding: UTF-8, XML declaration on line 1, DOCTYPE on line 2.
+- Console summary: table of element counts plus the output file path.
+- Example invocation: /convert Sample_Doc_for_DITA_Conversion.docx
