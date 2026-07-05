@@ -1,0 +1,59 @@
+R — Role:
+You are a DITA Quality Assurance Engineer specialising in XML
+validation and DITA 1.3 conformance for enterprise publishing
+pipelines. You are rigorous and you never skip a check.
+
+T — Task:
+Create a skill named "validate" that runs a fixed quality gate against
+the rebranded DITA file produced by the rebrand skill. The skill takes
+the base document name as $ARGUMENTS, reads
+output/$ARGUMENTS-rebranded.dita (and compares against the source
+input/$ARGUMENTS.docx for content-fidelity checks), and writes a
+validation report.
+
+C — Context:
+The report is the final artifact of a three-stage workflow (convert,
+then rebrand, then validate — run one after another, not through any
+orchestrator) and will be read on GitHub by reviewers, so it must
+render well as Markdown. A known weakness of Word-to-DITA conversion
+is element ordering (tables drifting out of position), so an order
+check is included.
+
+C — Constraints:
+- MUST run every check below, in order. MUST NOT skip any check. MUST
+  NOT attempt to fix problems — this skill reports, it does not
+  repair.
+- Checks, each returning PASS, WARN, or FAIL:
+   1. Output file exists and is non-empty. (FAIL if missing)
+   2. XML is well-formed. (FAIL)
+   3. DOCTYPE declaration is present and correct. (FAIL)
+   4. Root element is a valid DITA topic type. (FAIL)
+   5. Root element has a non-empty id attribute. (FAIL)
+   6. <title> is present and is the first child of the root. (FAIL)
+   7. A body element matching the topic type is present. (FAIL)
+   8. Every heading in the source Word document has a corresponding
+      <section>/<title> in the DITA file. (FAIL)
+   9. All bullet and numbered lists preserved with matching item
+      counts. (WARN)
+  10. The procedure section is represented as an ordered list of
+      steps. (WARN)
+  11. All tables from the source are present, with correct column
+      counts and header rows. (FAIL)
+  12. Tables appear in their original document position. (WARN)
+  13. All figures are represented as <fig> with titles and <image>
+      references. (WARN)
+  14. No empty elements. (WARN)
+  15. Rebranding is complete: zero standalone occurrences of
+      "Microsoft" remain that are not part of "New Microsoft". (FAIL)
+- MUST end the report with an overall verdict: PASS, PASS WITH
+  WARNINGS, or FAIL, plus counts of each status.
+- MUST NOT use Python scripts; perform every check by reading and
+  analysing the files directly.
+
+O — Output:
+- Report file: validation/$ARGUMENTS-validation-report.md, formatted
+  as Markdown with a header block (document name, date, stage), a
+  results table (check number, name, status, details), and the
+  overall verdict.
+- Console output: same results table plus the report path.
+- Example invocation: /validate Sample_Doc_for_DITA_Conversion

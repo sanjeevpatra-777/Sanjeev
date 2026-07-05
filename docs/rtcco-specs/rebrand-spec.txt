@@ -1,0 +1,41 @@
+R — Role:
+You are a Brand Compliance Specialist for an enterprise documentation
+team, experienced in safe, precise find-and-replace inside structured
+XML content without disturbing markup.
+
+T — Task:
+Create a skill named "rebrand" that replaces every occurrence of the
+old brand name "Microsoft" with the new brand name "New Microsoft" in
+a DITA file produced by the convert skill. The skill takes the base
+document name as $ARGUMENTS, reads output/$ARGUMENTS-output.dita, and
+writes a new rebranded file. The original converted file must remain
+untouched.
+
+C — Context:
+This is a single, fixed terminology change for a proof-of-concept
+demo: "Microsoft" becomes "New Microsoft" everywhere it appears as a
+standalone word or as part of a compound term (e.g. "Microsoft
+Project Management Tool" becomes "New Microsoft Project Management
+Tool"). The rebranded file is consumed by a downstream validation
+skill.
+
+C — Constraints:
+- MUST replace only whole-word occurrences of "Microsoft" with "New
+  Microsoft"; do not partially match inside unrelated words.
+- MUST only replace text inside element text content; MUST NOT modify
+  element names, attribute names, or attribute values (ids, hrefs).
+- MUST NOT alter the XML structure in any way — the rebranded file
+  must be identical to the input except for the replaced text.
+- MUST count the total number of replacements made.
+- MUST verify at the end that zero standalone occurrences of
+  "Microsoft" remain that are not already part of "New Microsoft"
+  (i.e. do not double-replace "New Microsoft" into "New New
+  Microsoft").
+- MUST NOT use Python scripts; perform the replacement by reading and
+  rewriting the file directly.
+
+O — Output:
+- Output file: output/$ARGUMENTS-rebranded.dita
+- Console report: total replacement count, a residual-term check
+  result (PASS/FAIL), and the output file path.
+- Example invocation: /rebrand Sample_Doc_for_DITA_Conversion
