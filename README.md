@@ -11,9 +11,13 @@ Only one file **`skill-creator`**, a meta-skill that generates other skills from
 ## Repo structure
 
 .claude/commands/    ->   the skills (skill-creator, convert, rebrand, validate)
+
 docs/rtcco-specs/    ->   the RTCCO specifications used to generate each skill
+
 input/               ->   the source Word document
+
 output/              ->   the converted and rebranded DITA files
+
 validation/          ->   the validation report
 
 ## How to run
