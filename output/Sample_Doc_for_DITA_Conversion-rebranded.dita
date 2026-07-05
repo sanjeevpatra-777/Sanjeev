@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="sample-doc-for-dita-conversion">
+  <title>New Microsoft Project Management Tool - Setup Guide and System Design</title>
+  <body>
+    <section>
+      <title>Introduction and Overview</title>
+      <p>This document provides a high-level summary of New Microsoft Project Management Tool, including goals, scope, and primary features such as task tracking, team collaboration, and reporting developed by New Microsoft.</p>
+    </section>
+    <section>
+      <title>Prerequisites</title>
+      <ul>
+        <li>Project Manager credentials</li>
+        <li>Approved project charter</li>
+      </ul>
+    </section>
+    <section>
+      <title>Procedure: Creating a New Project</title>
+      <ol>
+        <li>Access the dashboard and select New Project.</li>
+        <li>Complete the project details form.</li>
+      </ol>
+      <fig>
+        <title>Figure 1: New Project Creation Interface</title>
+        <image href="images/figure-1.png"/>
+      </fig>
+    </section>
+    <section>
+      <title>System Architecture (New Microsoft)</title>
+      <p>The system follows a microservices-based architecture with the following major components:</p>
+      <ul>
+        <li><b>Frontend</b>: React-based single-page application</li>
+        <li><b>Backend</b>: Node.js / Express services</li>
+        <li><b>Database</b> <b>Layer</b>: PostgreSQL + Redis cache</li>
+        <li>Integration Services: REST APIs and Webhooks</li>
+      </ul>
+    </section>
+    <section>
+      <title>Data Design in New Microsoft Ecosystem</title>
+      <p>Data is managed using relational models with normalization for integrity.</p>
+      <table>
+        <tgroup cols="2">
+          <colspec colname="c1" colnum="1"/>
+          <colspec colname="c2" colnum="2"/>
+          <thead>
+            <row>
+              <entry><b>Entity</b></entry>
+              <entry><b>Key Attributes</b></entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>Project</entry>
+              <entry>id, name, status, dates</entry>
+            </row>
+            <row>
+              <entry>Task</entry>
+              <entry>id, project_id, assignee, priority</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    <section>
+      <title>Interface Design as per New Microsoft Standards</title>
+      <p>Internal communication uses RESTful APIs with JSON payloads. External integrations via OAuth and webhooks.</p>
+    </section>
+    <section>
+      <title>User Interface (UI) Mockups</title>
+      <p>The UI follows New Microsoft Material Design principles with responsive layouts.</p>
+      <fig>
+        <title>Figure 2: New Microsoft Dashboard UI Mockup</title>
+        <image href="images/figure-2.png"/>
+      </fig>
+      <p>This setup ensures scalability, maintainability, and excellent user experience (see attached image for wireframe)</p>
+    </section>
+    <section>
+      <title>Stakeholder List at New Microsoft</title>
+      <table>
+        <tgroup cols="3">
+          <colspec colname="c1" colnum="1"/>
+          <colspec colname="c2" colnum="2"/>
+          <colspec colname="c3" colnum="3"/>
+          <thead>
+            <row>
+              <entry>Stakeholder</entry>
+              <entry>Role</entry>
+              <entry>Responsibilities</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>New Microsoft Project Sponsor</entry>
+              <entry>Executive</entry>
+              <entry>Budget approval</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+    <section>
+      <title>Project Milestones at New Microsoft</title>
+      <ol>
+        <li>Requirements Gathering - Week 2 (New Microsoft standard)</li>
+      </ol>
+    </section>
+  </body>
+</topic>
